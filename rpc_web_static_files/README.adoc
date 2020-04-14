@@ -1,0 +1,80 @@
+= What's this?
+
+A web honeypot that created by ILX RPC with static files on BIG-IP HW/VE platform.
+
+The web honeypot can accept any sub path, the welcome page is trick submit page.
+
+== Set up
+
+Assume you have link:https://clouddocs.f5.com/products/extensions/f5-telemetry-streaming/latest[Telemetry Streaming] configured correctly in your BIG-IP HW/VE platform.
+
+*1. web honeypot development*
+
+Refer to sub-folder `rpc_web`.
+
+[source, bash]
+.*2. create ilx plugin*
+----
+create ilx plugin rpc_web rpc_web
+----
+
+[source, bash]
+.*3. create request-log profile*
+----
+// create pool if not already created
+create ltm pool telemetry-local monitor tcp members replace-all-with { 10.1.1.245:6514 }
+
+// create Request Log Profile
+create ltm profile request-log telemetry-http request-log-pool telemetry-local request-log-protocol mds-tcp request-logging enabled request-log-template event_source=\"request_logging\",client_ip=\"$CLIENT_IP\",client_port=\"$CLIENT_PORT\",server_ip=\"$VIRTUAL_IP\",server_port=\"$VIRTUAL_PORT\",http_version=\"$HTTP_VERSION\",http_request=\"$HTTP_REQUEST\",http_method=\"$HTTP_METHOD\",http_uri=\"$HTTP_URI\",http_path=\"$HTTP_PATH\",http_query=\"$HTTP_QUERY\",virtual_name=\"$VIRTUAL_NAME\",event_timestamp=\"$DATE_HTTP\"
+----
+
+[source, bash]
+.*3. create honeypot vs*
+----
+create ltm virtual miguan_rpc_web_static_files destination 10.1.10.21:80 ip-protocol tcp profiles add { http telemetry-http } pool empty_pool rules { rpc_web_plugin/rpc_web }
+----
+
+*4. test*
+
+Access http://10.1.10.21 on any broswer.
+
+== Event
+
+[source, json]
+.*Sample Event*
+----
+{
+  "_index": "bigipindex",
+  "_type": "f5.telemetry",
+  "_id": "Xv1Gd3EBfSmrABo8zKb9",
+  "_version": 1,
+  "_score": null,
+  "_source": {
+    "data": {
+      "event_source": "request_logging",
+      "client_ip": "10.1.10.1",
+      "client_port": "59193",
+      "server_ip": "10.1.10.21",
+      "server_port": "80",
+      "http_version": "HTTP/1.1",
+      "http_request": "GET /infor_summit.do?name=Kylin+SONG&phone=18611907049&address=Beijing HTTP/1.1",
+      "http_method": "GET",
+      "http_uri": "/infor_summit.do?name=Kylin+SONG&phone=18611907049&address=Beijing",
+      "http_path": "/infor_summit.do",
+      "http_query": "name=Kylin+SONG&phone=18611907049&address=Beijing",
+      "virtual_name": "/Common/miguan_rpc_web_static_files",
+      "event_timestamp": "2020-04-14T06:01:02.000Z",
+      "tenant": "Common"
+    },
+    "telemetryEventCategory": "LTM"
+  },
+  "fields": {
+    "data.event_timestamp": [
+      "2020-04-14T06:01:02.000Z"
+    ]
+  },
+  "sort": [
+    1586844062000
+  ]
+}
+----

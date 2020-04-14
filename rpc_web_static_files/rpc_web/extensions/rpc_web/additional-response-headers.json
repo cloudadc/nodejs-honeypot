@@ -1,0 +1,6 @@
+{
+    "Server": "BIG-IP ILX STREAMING", 
+    "Content-Type": "text/html",
+    "X-Powered-By": "SE", 
+    "Access-Control-Allow-Origin": "*"
+}
