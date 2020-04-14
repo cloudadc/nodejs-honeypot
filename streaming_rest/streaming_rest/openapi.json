@@ -1,0 +1,127 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "PetStore OpenAPI definition",
+    "version": "v1.1"
+  },
+  "servers": [
+    {
+      "url": "http://10.1.10.23:80",
+      "description": "Generated server url"
+    }
+  ],
+  "tags": [
+    {
+      "name": "PetStore",
+      "description": "the pet store API"
+    }
+  ],
+  "paths": {
+    "/api/pets": {
+      "get": {
+        "summary": "Get all pets",
+        "description": "Return all pets in petstore",
+        "responses": {
+          "200": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/getPetByName": {
+      "get": {
+        "summary": "Get pet by name",
+        "description": "Returns pet for name specified.",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Pet name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Pet not found"
+          }
+        }
+      }
+    },
+    "/api/addPet": {
+      "post": {
+        "summary": "Add pet",
+        "description": "Add a pet",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Pet name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "default response"
+          }
+        }
+      }
+    },
+    "/api/deletePet": {
+      "delete": {
+        "summary": "Delete pet",
+        "description": "Delete a pet by name",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Pet name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "default response"
+          }
+        }
+      }
+    },
+    "/api/updatePet": {
+      "put": {
+        "summary": "Update pet",
+        "description": "Update a exist pet",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Pet name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "default response"
+          }
+        }
+      }
+    }
+  }
+}

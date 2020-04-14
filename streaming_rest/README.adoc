@@ -1,0 +1,103 @@
+= What's this?
+
+A REST Service Honeypot use to record attacker's source information and interact with attacker.
+
+== Set up
+
+*1. honeypot development*
+
+Refer to sub-folder `streaming_rest`.
+
+.*2. npm install packages*
+----
+cd /var/ilx/workspaces/Common/streaming_rest/extensions/streaming_rest/
+npm install express --save
+----
+
+[source, bash]
+.*3. create ilx plugin*
+----
+create ilx plugin streaming_rest_plugin streaming_rest
+----
+
+[source, bash]
+.*3. create ilx profile*
+----
+create ltm profile ilx streaming_rest_profile defaults-from ilx plugin streaming_rest_plugin
+----
+
+[source, bash]
+.*4. create honeypot vs*
+----
+create ltm virtual miguan_streaming_rest destination 10.1.10.23:80 ip-protocol tcp profiles add { tcp streaming_rest_profile }
+----
+
+*5. test*
+
+* http://10.1.10.23:80/openapi.json
+
+* curl http://10.1.10.23:80/api/pets -X GET
+* curl http://10.1.10.23:80/api/getPetByName?name=foo -X GET
+* curl http://10.1.10.23:80/api/addPet -X POST -D '{"name": "puppy"}'
+* curl http://10.1.10.23:80/api/deletePet?name=foo -X DELETE
+* curl http://10.1.10.23:80/api/updatePet?name=foo -X PUT -D '{"name": "puppy"}'
+
+== Event
+
+[source, json]
+.*Sample Event*
+----
+{
+   "data":{
+      "httpHeaders":{
+         "host":"10.1.10.23",
+         "connection":"keep-alive",
+         "cache-control":"max-age=0",
+         "upgrade-insecure-requests":"1",
+         "user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36",
+         "accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+         "accept-encoding":"gzip, deflate",
+         "accept-language":"en-US,en;q=0.9",
+         "if-none-match":"W/\"d-r4HwPFvKPBfCUp18ck7xwn45XPU\""
+      },
+      "baseUrl":"",
+      "fresh":false,
+      "hostname":"10.1.10.23",
+      "clientIp":"10.1.10.1",
+      "ips":[
+
+      ],
+      "originalUrl":"/api/getPetByName?name=foo",
+      "params":{
+
+      },
+      "path":"/api/getPetByName",
+      "protocol":"http",
+      "query":{
+         "name":"foo"
+      },
+      "route":{
+         "path":"/api/getPetByName",
+         "stack":[
+            {
+               "name":"<anonymous>",
+               "keys":[
+
+               ],
+               "regexp":{
+                  "fast_star":false,
+                  "fast_slash":false
+               },
+               "method":"get"
+            }
+         ],
+         "methods":{
+            "get":true
+         }
+      },
+      "secure":false
+   },
+   "event_timestamp":1586878576835
+}
+----
+

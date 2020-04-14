@@ -15,4 +15,7 @@ With this programmability, this project provide a series of Open Source Honeypot
 |link:streaming_tcp/README.adoc[streaming_tcp]
 |ILX Streaming based MQTT TCP Honeypot
 
+|link:streaming_rest/README.adoc[streaming_rest]
+|ILX Streaming based Rest Service Honeypot
+
 |===
