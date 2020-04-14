@@ -1,0 +1,44 @@
+= What's this?
+
+A MQTT Honeypot use to record attacker's source information.
+
+== Set up
+
+*1. tcp honeypot development*
+
+Refer to sub-folder `streaming_tcp`.
+
+[source, bash]
+.*2. create ilx plugin*
+----
+create ilx plugin streaming_tcp_plugin streaming_tcp
+----
+
+[source, bash]
+.*3. create ilx profile*
+----
+create ltm profile ilx streaming_tcp_profile defaults-from ilx plugin streaming_tcp_plugi
+----
+
+[source, bash]
+.*4. create honeypot vs*
+----
+create ltm virtual miguan_streaming_tcp_mqtt destination 10.1.10.22:1883 ip-protocol tcp profiles add { tcp streaming_tcp_profile }
+----
+
+== Event
+
+[source, json]
+.*Sample Event*
+----
+{
+   "event":{
+      "client_ip":"10.1.10.1",
+      "client_port":51373,
+      "client_ip_family":"IPv4",
+      "server_ip":"10.1.10.22",
+      "server_port":1883
+   }
+}
+----
+

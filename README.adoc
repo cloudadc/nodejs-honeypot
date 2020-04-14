@@ -1,3 +1,18 @@
-= nodejs-miguan
+= What's this?
 
-The Open Source Honeypot that can add on F5 BIG-IP HW/VE Edge computing.
+F5 new iSeries platform supply programmability for NetOps, SecOps, Edge computing engineer, which enable automation and orchestration of cloud, software-defined architectures, mutative business requirements and IT solutions/experts. F5 iRules® scripting has long provided granular traffic control and visibility, enabling customization, rapid response to code errors and security vulnerabilities, and support for new protocols. New F5 iRules LXTM lowers costs and speeds deployments by extending iRules to JavaScript developers and providing access to, and easier integration with, over 250,000 community Node.js packages.
+
+With this programmability, this project provide a series of Open Source Honeypot that can add on F5 BIG-IP HW/VE Edge computing.
+
+== Available Honeypots
+
+|===
+|Name |Description 
+
+|link:rpc_web_static_files/README.adoc[rpc_web_static_files]
+|ILX RPC + static html/js Web Honeypot
+
+|link:streaming_tcp/README.adoc[streaming_tcp]
+|ILX Streaming based MQTT TCP Honeypot
+
+|===
