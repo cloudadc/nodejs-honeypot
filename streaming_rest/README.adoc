@@ -34,13 +34,18 @@ create ltm virtual miguan_streaming_rest destination 10.1.10.23:80 ip-protocol t
 
 *5. test*
 
-* http://10.1.10.23:80/openapi.json
+* http://10.1.10.12:80/openapi.json
 
-* curl http://10.1.10.23:80/api/pets -X GET
-* curl http://10.1.10.23:80/api/getPetByName?name=foo -X GET
-* curl http://10.1.10.23:80/api/addPet -X POST -D '{"name": "puppy"}'
-* curl http://10.1.10.23:80/api/deletePet?name=foo -X DELETE
-* curl http://10.1.10.23:80/api/updatePet?name=foo -X PUT -D '{"name": "puppy"}'
+* curl http://10.1.10.12:80/api/customers -X GET
+* curl http://10.1.10.12:80/api/getCustomerByName?name=foo -X GET
+* curl http://10.1.10.12:80/api/addCustomer -X POST -D '{"name": "puppy"}'
+* curl http://10.1.10.12:80/api/deleteCustomer?name=foo -X DELETE
+* curl http://10.1.10.12:80/api/updateCustomer?name=foo -X PUT -D '{"name": "puppy"}'
+
+* curl -X POST http://10.1.10.12/oauth/request_token?oauth_consumer_key=K7ny27JTpKVs
+{"oauth_token":"Z6eEdO8MOmk394WozF5oKyuAv855l4Mlqo7hhlSLik"}
+* curl http://10.1.10.12/oauth/authorize?oauth_token=Z6eEdO8MOmk394WozF5oKyuAv855l4Mlqo7hhlSLik
+{"success":1}
 
 == Event
 
@@ -67,17 +72,17 @@ create ltm virtual miguan_streaming_rest destination 10.1.10.23:80 ip-protocol t
       "ips":[
 
       ],
-      "originalUrl":"/api/getPetByName?name=foo",
+      "originalUrl":"/api/getCustomerByName?name=foo",
       "params":{
 
       },
-      "path":"/api/getPetByName",
+      "path":"/api/getCustomerByName",
       "protocol":"http",
       "query":{
          "name":"foo"
       },
       "route":{
-         "path":"/api/getPetByName",
+         "path":"/api/getCustomerByName",
          "stack":[
             {
                "name":"<anonymous>",

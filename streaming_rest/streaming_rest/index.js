@@ -47,32 +47,44 @@ app.get('/openapi.json', function (req, res) {
 
 })
 
-app.get('/api/pets', function (req, res) {
+app.get('/api/customers', function (req, res) {
   record(req);
-  res.send(JSON.stringify({"pets": ["bar", "foo", "zoo"]}));
+  res.send(JSON.stringify({"customerss": ["bar", "foo", "zoo"]}));
 })
 
-app.get('/api/getPetByName', function (req, res) {
+app.get('/api/getCustomerByName', function (req, res) {
   record(req);
   var name = req.query.name;
   res.send(JSON.stringify({"pet": name}));
 })
 
-app.post('/api/addPet', function (req, res) {
+app.post('/api/addCustomer', function (req, res) {
   record(req);
   res.send(JSON.stringify({"success": 1}));
 })
 
-app.delete('/api/deletePet', function (req, res) {
+app.delete('/api/deleteCustomer', function (req, res) {
   record(req);
   res.send(JSON.stringify({"success": 1}));
 })
 
-app.put('/api/updatePet', function (req, res) {
+app.put('/api/updateCustomer', function (req, res) {
   record(req);
   res.send(JSON.stringify({"success": 1}));
+})
+
+app.get('/oauth/authorize', function (req, res) {
+  record(req);
+  res.send(JSON.stringify({"success": 1}));
+})
+
+app.post('/oauth/request_token', function (req, res) {
+  record(req);
+  res.send(JSON.stringify({"oauth_token": "Z6eEdO8MOmk394WozF5oKyuAv855l4Mlqo7hhlSLik"}));
 })
 
 var plugin = new f5.ILXPlugin();
 plugin.startHttpServer(app);
+
+
 

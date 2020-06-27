@@ -1,0 +1,46 @@
+= What's this?
+
+A web honeypot that created by ILX RPC with raw text file on BIG-IP HW/VE platform.
+
+The web honeypot will response raw text directly.
+
+== Set up
+
+Assume you have link:https://clouddocs.f5.com/products/extensions/f5-telemetry-streaming/latest[Telemetry Streaming] configured correctly in your BIG-IP HW/VE platform.
+
+*1. web honeypot development*
+
+Refer to sub-folder `rpc_web`.
+
+[source, bash]
+.*2. create ilx plugin*
+----
+create ilx plugin rpc_web rpc_web
+----
+
+[source, bash]
+.*3. create request-log profile*
+----
+// create pool if not already created
+create ltm pool telemetry-local monitor tcp members replace-all-with { 10.1.1.245:6514 }
+
+// create Request Log Profile
+create ltm profile request-log telemetry-http request-log-pool telemetry-local request-log-protocol mds-tcp request-logging enabled request-log-template event_source=\"request_logging\",client_ip=\"$CLIENT_IP\",client_port=\"$CLIENT_PORT\",server_ip=\"$VIRTUAL_IP\",server_port=\"$VIRTUAL_PORT\",http_version=\"$HTTP_VERSION\",http_request=\"$HTTP_REQUEST\",http_method=\"$HTTP_METHOD\",http_uri=\"$HTTP_URI\",http_path=\"$HTTP_PATH\",http_query=\"$HTTP_QUERY\",virtual_name=\"$VIRTUAL_NAME\",event_timestamp=\"$DATE_HTTP\"
+----
+
+[source, bash]
+.*3. create honeypot vs*
+----
+create ltm virtual miguan_rpc_web_raw_text destination 10.1.10.21:80 ip-protocol tcp profiles add { http telemetry-http } pool empty_pool rules { rpc_web_plugin/rpc_web }
+----
+
+*4. test*
+
+Access http://10.1.10.21 on any broswer.
+
+== Event
+
+[source, json]
+.*Sample Event*
+----
+----

@@ -1,26 +1,26 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "PetStore OpenAPI definition",
+    "title": "OpenAPI definition",
     "version": "v1.1"
   },
   "servers": [
     {
-      "url": "http://10.1.10.23:80",
+      "url": "http://10.1.10.12:80",
       "description": "Generated server url"
     }
   ],
   "tags": [
     {
-      "name": "PetStore",
-      "description": "the pet store API"
+      "name": "Customer",
+      "description": "the customer store API"
     }
   ],
   "paths": {
-    "/api/pets": {
+    "/api/customers": {
       "get": {
-        "summary": "Get all pets",
-        "description": "Return all pets in petstore",
+        "summary": "Get all customers",
+        "description": "Return all customers in customerstore",
         "responses": {
           "200": {
             "description": "default response",
@@ -35,15 +35,15 @@
         }
       }
     },
-    "/api/getPetByName": {
+    "/api/getCustomerByName": {
       "get": {
-        "summary": "Get pet by name",
-        "description": "Returns pet for name specified.",
+        "summary": "Get customer by name",
+        "description": "Returns customer for name specified.",
         "parameters": [
           {
             "name": "name",
             "in": "query",
-            "description": "Pet name",
+            "description": "Customer name",
             "required": true,
             "schema": {
               "type": "string"
@@ -52,20 +52,20 @@
         ],
         "responses": {
           "404": {
-            "description": "Pet not found"
+            "description": "Customer not found"
           }
         }
       }
     },
-    "/api/addPet": {
+    "/api/addCustomer": {
       "post": {
-        "summary": "Add pet",
-        "description": "Add a pet",
+        "summary": "Add customer",
+        "description": "Add a customer",
         "parameters": [
           {
             "name": "name",
             "in": "query",
-            "description": "Pet name",
+            "description": "Customer name",
             "required": true,
             "schema": {
               "type": "string"
@@ -79,15 +79,15 @@
         }
       }
     },
-    "/api/deletePet": {
+    "/api/deleteCustomer": {
       "delete": {
-        "summary": "Delete pet",
-        "description": "Delete a pet by name",
+        "summary": "Delete customer",
+        "description": "Delete a customer by name",
         "parameters": [
           {
             "name": "name",
             "in": "query",
-            "description": "Pet name",
+            "description": "Customer name",
             "required": true,
             "schema": {
               "type": "string"
@@ -101,15 +101,59 @@
         }
       }
     },
-    "/api/updatePet": {
+    "/api/updateCustomer": {
       "put": {
-        "summary": "Update pet",
-        "description": "Update a exist pet",
+        "summary": "Update customer",
+        "description": "Update a exist customer",
         "parameters": [
           {
             "name": "name",
             "in": "query",
-            "description": "Pet name",
+            "description": "Customer name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "default response"
+          }
+        }
+      }
+    },
+    "/oauth/authorize": {
+      "get": {
+        "summary": "Allows a Consumer application to use an OAuth Request Token",
+        "description": "",
+        "parameters": [
+          {
+            "name": "oauth_token",
+            "in": "query",
+            "description": "oauth token name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Failed"
+          }
+        }
+      }
+    },
+    "/oauth/request_token": {
+      "post": {
+        "summary": "Request access token",
+        "description": "",
+        "parameters": [
+          {
+            "name": "oauth_consumer_key",
+            "in": "query",
+            "description": "consumer key",
             "required": true,
             "schema": {
               "type": "string"
@@ -125,3 +169,4 @@
     }
   }
 }
+
