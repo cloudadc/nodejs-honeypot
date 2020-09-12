@@ -1,4 +1,5 @@
 = What's this?
+:toc: manual
 
 This conatains the low interaction honeypot.
 
