@@ -1,0 +1,155 @@
+= What's this?
+
+This conatains the low interaction honeypot.
+
+== Steps to deploy
+
+=== Import iRules
+
+Login into the TMUI, Import the Honeypot iRules: link:honeypot_http.tcl[honeypot_http.tcl], link:honeypot_tcp.tcl[honeypot_tcp.tcl], link:honeypot_udp.tcl[honeypot_udp.tcl].
+
+Execute the following commands to show all imported honeypot irules
+
+[source, bash]
+----
+tmsh show ltm rule honeypot_*
+----
+
+=== Prepare Ips and vlan
+
+Put all honeypot used IPs and vlan mapping to a file, each line has one map, below is a example.
+
+[source, bash]
+.*Example*
+----
+$ echo "10.1.10.35|36|37 vlan01" >> test.1
+$ echo "10.1.10.45|46 vlan02" >> test.1
+
+$ cat test.1 
+10.1.10.35|36|37 vlan01
+10.1.10.45|46 vlan02
+----
+
+NOTE: `10.1.10.35|36|37 vlan01` means in valn01 there has 3 ips(10.1.10.35, 10.1.10.36, 10.1.10.37) are usede by honenypot.
+
+=== Generate Honeypot initial bash scripts
+
+This section use a tools to generate honeypot initial bash scripts.
+
+[source, bash]
+.*1. Install Java 13 on your local machine*
+----
+$ java --version
+openjdk 13.0.2 2020-01-14
+OpenJDK Runtime Environment (build 13.0.2+8)
+OpenJDK 64-Bit Server VM (build 13.0.2+8, mixed mode, sharing)
+----
+
+[source, bash]
+.*2. Install Maven 3.5 on your local machine(Optional, only if you want bulild from source code)*
+----
+$ mvn --version
+Apache Maven 3.6.3 (cecedd343002696d0abb50b32b541b8a6ba2883f)
+----
+
+[source, bash]
+.*3. Build generator tools(Optional, only if you want bulild from source code)*
+----
+cd tools/
+mvn clean install
+----
+
+NOTE: This will generate a runnable `tmsh-generator-0.1.jar` under `target directory`.
+
+[source, bash]
+.*4. Generate bash scripts*
+----
+java -jar tmsh-generator-0.1.jar test.1 
+----
+
+NOTE This will generate 2 files `tmsh.create.sh` and `tmsh.delete.sh`.
+
+[source, bash]
+.*tmsh.create.sh*
+----
+tmsh create ltm virtual vlan02_10.1.10.45_tcp destination 10.1.10.45:any ip-protocol tcp rules { honeypot_tcp.tcl } source-address-translation { type automap }
+tmsh create ltm virtual vlan02_10.1.10.45_udp destination 10.1.10.45:any ip-protocol udp rules { honeypot_udp.tcl } source-address-translation { type automap }
+tmsh create ltm virtual vlan02_10.1.10.45_80_http destination 10.1.10.45:80 ip-protocol tcp rules { honeypot_http.tcl  } profiles add { http}  source-address-translation { type automap }
+tmsh create ltm virtual vlan02_10.1.10.45_8080_http destination 10.1.10.45:8080 ip-protocol tcp rules { honeypot_http.tcl  } profiles add { http}  source-address-translation { type automap }
+tmsh create ltm virtual vlan02_10.1.10.46_tcp destination 10.1.10.46:any ip-protocol tcp rules { honeypot_tcp.tcl } source-address-translation { type automap }
+tmsh create ltm virtual vlan02_10.1.10.46_udp destination 10.1.10.46:any ip-protocol udp rules { honeypot_udp.tcl } source-address-translation { type automap }
+tmsh create ltm virtual vlan02_10.1.10.46_80_http destination 10.1.10.46:80 ip-protocol tcp rules { honeypot_http.tcl  } profiles add { http}  source-address-translation { type automap }
+tmsh create ltm virtual vlan02_10.1.10.46_8080_http destination 10.1.10.46:8080 ip-protocol tcp rules { honeypot_http.tcl  } profiles add { http}  source-address-translation { type automap }
+tmsh create ltm virtual vlan01_10.1.10.35_tcp destination 10.1.10.35:any ip-protocol tcp rules { honeypot_tcp.tcl } source-address-translation { type automap }
+tmsh create ltm virtual vlan01_10.1.10.35_udp destination 10.1.10.35:any ip-protocol udp rules { honeypot_udp.tcl } source-address-translation { type automap }
+tmsh create ltm virtual vlan01_10.1.10.35_80_http destination 10.1.10.35:80 ip-protocol tcp rules { honeypot_http.tcl  } profiles add { http}  source-address-translation { type automap }
+tmsh create ltm virtual vlan01_10.1.10.35_8080_http destination 10.1.10.35:8080 ip-protocol tcp rules { honeypot_http.tcl  } profiles add { http}  source-address-translation { type automap }
+tmsh create ltm virtual vlan01_10.1.10.36_tcp destination 10.1.10.36:any ip-protocol tcp rules { honeypot_tcp.tcl } source-address-translation { type automap }
+tmsh create ltm virtual vlan01_10.1.10.36_udp destination 10.1.10.36:any ip-protocol udp rules { honeypot_udp.tcl } source-address-translation { type automap }
+tmsh create ltm virtual vlan01_10.1.10.36_80_http destination 10.1.10.36:80 ip-protocol tcp rules { honeypot_http.tcl  } profiles add { http}  source-address-translation { type automap }
+tmsh create ltm virtual vlan01_10.1.10.36_8080_http destination 10.1.10.36:8080 ip-protocol tcp rules { honeypot_http.tcl  } profiles add { http}  source-address-translation { type automap }
+tmsh create ltm virtual vlan01_10.1.10.37_tcp destination 10.1.10.37:any ip-protocol tcp rules { honeypot_tcp.tcl } source-address-translation { type automap }
+tmsh create ltm virtual vlan01_10.1.10.37_udp destination 10.1.10.37:any ip-protocol udp rules { honeypot_udp.tcl } source-address-translation { type automap }
+tmsh create ltm virtual vlan01_10.1.10.37_80_http destination 10.1.10.37:80 ip-protocol tcp rules { honeypot_http.tcl  } profiles add { http}  source-address-translation { type automap }
+tmsh create ltm virtual vlan01_10.1.10.37_8080_http destination 10.1.10.37:8080 ip-protocol tcp rules { honeypot_http.tcl  } profiles add { http}  source-address-translation { type automap }
+----
+
+[source, bash]
+.*tmsh.delete.sh*
+----
+tmsh delete ltm virtual vlan02_10.1.10.45_tcp
+tmsh delete ltm virtual vlan02_10.1.10.45_udp
+tmsh delete ltm virtual vlan02_10.1.10.45_80_http
+tmsh delete ltm virtual vlan02_10.1.10.45_8080_http
+tmsh delete ltm virtual vlan02_10.1.10.46_tcp
+tmsh delete ltm virtual vlan02_10.1.10.46_udp
+tmsh delete ltm virtual vlan02_10.1.10.46_80_http
+tmsh delete ltm virtual vlan02_10.1.10.46_8080_http
+tmsh delete ltm virtual vlan01_10.1.10.35_tcp
+tmsh delete ltm virtual vlan01_10.1.10.35_udp
+tmsh delete ltm virtual vlan01_10.1.10.35_80_http
+tmsh delete ltm virtual vlan01_10.1.10.35_8080_http
+tmsh delete ltm virtual vlan01_10.1.10.36_tcp
+tmsh delete ltm virtual vlan01_10.1.10.36_udp
+tmsh delete ltm virtual vlan01_10.1.10.36_80_http
+tmsh delete ltm virtual vlan01_10.1.10.36_8080_http
+tmsh delete ltm virtual vlan01_10.1.10.37_tcp
+tmsh delete ltm virtual vlan01_10.1.10.37_udp
+tmsh delete ltm virtual vlan01_10.1.10.37_80_http
+tmsh delete ltm virtual vlan01_10.1.10.37_8080_http
+----
+
+=== Deploy honeypots
+
+Copy both `tmsh.create.sh` and `tmsh.delete.sh` to F5 Console
+
+[source, bash]
+.*Deploy Honeypots*
+----
+./tmsh.create.sh
+----
+
+[source, bash]
+.*Remove Honeypots*
+----
+./tmsh.delete.sh
+----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
