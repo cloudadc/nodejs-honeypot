@@ -65,7 +65,7 @@ NOTE: This will generate a runnable `tmsh-generator-0.1.jar` under `target direc
 [source, bash]
 .*4. Generate bash scripts*
 ----
-java -jar tmsh-generator-0.1.jar test.1 
+java -jar tmsh-generator-0.1.jar -- ips test.1 
 ----
 
 NOTE This will generate 2 files `tmsh.create.sh` and `tmsh.delete.sh`.
