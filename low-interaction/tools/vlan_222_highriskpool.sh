@@ -1,0 +1,1 @@
+tmsh create ltm pool vlan_222_risk_pool members add { 10.36.222.135:any { address 10.36.222.135 } }

@@ -1,0 +1,64 @@
+= What's this?
+:toc: manual
+
+可编程蜜罐脚本生成器。
+
+== 脚本生成
+
+脚本生成通过脚本生成器（编译生成 tmsh-generator-0.1.jar），脚本生成器需要在 Linux 或Mac 操作系统上运行，且Linux或Mac 操作系统上需要安装有 java 13 环境。
+
+[source, bash]
+----
+$ java --version
+openjdk 13 2019-09-17
+OpenJDK Runtime Environment (build 13+33)
+OpenJDK 64-Bit Server VM (build 13+33, mixed mode, sharing)
+----
+
+脚本生成器参数说明：
+
+* --ips – 云科蜜罐的IP地址，该参数目前只支持两种格式：10.1.10.2|3|4|5|6|8|12 和 10.1.10.0/24
+* --self – 云科 Self IP
+* --vlan – vlan 的名称
+* --vlanTag – vlan tag ID
+* --isForwardHighRisk – 是否需要转发高危端口，默认值 false
+* --highRiskIps – 高危端口转发地址
+
+[source, bash]
+.*脚本生成示例一(无高危端口转发)*
+----
+$ java -jar tmsh-generator-0.1.jar --ips "10.1.10.2|3|4|5|6|8|13|14|15" --self 10.1.10.240 --vlan vlan_120 --netface 1.0 --vlanTag 120
+    Generated vlan_120_self.sh
+    Generated vlan_120_honeypot.sh
+----
+
+[source, bash]
+.*脚本生成示例二(有高危端口转发)*
+----
+$ java -jar tmsh-generator-0.1.jar --ips "10.1.10.2|3|4|5|6|8|12" --self 10.1.10.240 --vlan vlan_120 --netface 1.0 --vlanTag 120 --isForwardHighRisk true  --highRiskIps 10.1.10.100
+    Generated vlan_120_self.sh
+    Generated vlan_120_highriskpool.sh
+    Generated vlan_120_honeypot.sh
+----
+
+[source, bash]
+.*脚本生成示例三（C段地址且有高危端口转发）*
+----
+$ java -jar tmsh-generator-0.1.jar --ips "10.1.10.0/24" --self 10.1.10.240 --vlan vlan_120 --netface 1.0 --vlanTag 120 --isForwardHighRisk true  --highRiskIps 10.1.10.100
+    Generated vlan_120_self.sh
+    Generated vlan_120_highriskpool.sh
+    Generated vlan_120_honeypot.sh
+----
+
+== 脚本使用
+
+拷贝生成的脚本到 TMOS 命令行，执行既完成相应 VLAN 的蜜罐部署
+
+[source, bash]
+----
+./ vlan_120_self.sh
+./ vlan_120_highriskpool.sh
+./ vlan_120_honeypot.sh
+----
+
+
