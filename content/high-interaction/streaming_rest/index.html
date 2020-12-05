@@ -1,0 +1,488 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Streaming REST · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-donate/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-back-to-top-button/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../../website.css">
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="../streaming_tcp/" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../../low-interaction/">
+            
+                <a href="../../low-interaction/">
+            
+                    
+                    低交互蜜罐
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../../low-interaction/tools/">
+            
+                <a href="../../low-interaction/tools/">
+            
+                    
+                    蜜罐部署脚本生成器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    高交互蜜罐
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../rpc_web_raw_text/">
+            
+                <a href="../rpc_web_raw_text/">
+            
+                    
+                    RPC Web RAW
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../rpc_web_static_files/">
+            
+                <a href="../rpc_web_static_files/">
+            
+                    
+                    RPC Web Static Files
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../streaming_tcp/">
+            
+                <a href="../streaming_tcp/">
+            
+                    
+                    Streaming TCP
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3.4" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Streaming REST
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >Streaming REST</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="whats-this">What&#x2019;s this?</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>A REST Service Honeypot use to record attacker&#x2019;s source information and interact with attacker.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_set_up">Set up</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>1. honeypot development</strong></p>
+</div>
+<div class="paragraph">
+<p>Refer to sub-folder <code>streaming_rest</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title"><strong>2. npm install packages</strong></div>
+<div class="content">
+<pre>cd /var/ilx/workspaces/Common/streaming_rest/extensions/streaming_rest/
+npm install express --save</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title"><strong>3. create ilx plugin</strong></div>
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">create ilx plugin streaming_rest_plugin streaming_rest</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title"><strong>3. create ilx profile</strong></div>
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">create ltm profile ilx streaming_rest_profile defaults-from ilx plugin streaming_rest_plugin</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title"><strong>4. create honeypot vs</strong></div>
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">create ltm virtual miguan_streaming_rest destination 10.1.10.23:80 ip-protocol tcp profiles add { tcp streaming_rest_profile }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>5. test</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://10.1.10.12:80/openapi.json" class="bare" target="_blank">http://10.1.10.12:80/openapi.json</a></p>
+</li>
+<li>
+<p>curl <a href="http://10.1.10.12:80/api/customers" class="bare" target="_blank">http://10.1.10.12:80/api/customers</a> -X GET</p>
+</li>
+<li>
+<p>curl <a href="http://10.1.10.12:80/api/getCustomerByName?name=foo" class="bare" target="_blank">http://10.1.10.12:80/api/getCustomerByName?name=foo</a> -X GET</p>
+</li>
+<li>
+<p>curl <a href="http://10.1.10.12:80/api/addCustomer" class="bare" target="_blank">http://10.1.10.12:80/api/addCustomer</a> -X POST -D &apos;{&quot;name&quot;: &quot;puppy&quot;}&apos;</p>
+</li>
+<li>
+<p>curl <a href="http://10.1.10.12:80/api/deleteCustomer?name=foo" class="bare" target="_blank">http://10.1.10.12:80/api/deleteCustomer?name=foo</a> -X DELETE</p>
+</li>
+<li>
+<p>curl <a href="http://10.1.10.12:80/api/updateCustomer?name=foo" class="bare" target="_blank">http://10.1.10.12:80/api/updateCustomer?name=foo</a> -X PUT -D &apos;{&quot;name&quot;: &quot;puppy&quot;}&apos;</p>
+</li>
+<li>
+<p>curl -X POST <a href="http://10.1.10.12/oauth/request_token?oauth_consumer_key=K7ny27JTpKVs" class="bare" target="_blank">http://10.1.10.12/oauth/request_token?oauth_consumer_key=K7ny27JTpKVs</a>
+{&quot;oauth_token&quot;:&quot;Z6eEdO8MOmk394WozF5oKyuAv855l4Mlqo7hhlSLik&quot;}</p>
+</li>
+<li>
+<p>curl <a href="http://10.1.10.12/oauth/authorize?oauth_token=Z6eEdO8MOmk394WozF5oKyuAv855l4Mlqo7hhlSLik" class="bare" target="_blank">http://10.1.10.12/oauth/authorize?oauth_token=Z6eEdO8MOmk394WozF5oKyuAv855l4Mlqo7hhlSLik</a>
+{&quot;success&quot;:1}</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_event">Event</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="title"><strong>Sample Event</strong></div>
+<div class="content">
+<pre class="highlight"><code class="language-json" data-lang="json">{
+   <span class="hljs-string">&quot;data&quot;</span>:{
+      <span class="hljs-string">&quot;httpHeaders&quot;</span>:{
+         <span class="hljs-string">&quot;host&quot;</span>:<span class="hljs-string">&quot;10.1.10.23&quot;</span>,
+         <span class="hljs-string">&quot;connection&quot;</span>:<span class="hljs-string">&quot;keep-alive&quot;</span>,
+         <span class="hljs-string">&quot;cache-control&quot;</span>:<span class="hljs-string">&quot;max-age=0&quot;</span>,
+         <span class="hljs-string">&quot;upgrade-insecure-requests&quot;</span>:<span class="hljs-string">&quot;1&quot;</span>,
+         <span class="hljs-string">&quot;user-agent&quot;</span>:<span class="hljs-string">&quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36&quot;</span>,
+         <span class="hljs-string">&quot;accept&quot;</span>:<span class="hljs-string">&quot;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9&quot;</span>,
+         <span class="hljs-string">&quot;accept-encoding&quot;</span>:<span class="hljs-string">&quot;gzip, deflate&quot;</span>,
+         <span class="hljs-string">&quot;accept-language&quot;</span>:<span class="hljs-string">&quot;en-US,en;q=0.9&quot;</span>,
+         <span class="hljs-string">&quot;if-none-match&quot;</span>:<span class="hljs-string">&quot;W/\&quot;d-r4HwPFvKPBfCUp18ck7xwn45XPU\&quot;&quot;</span>
+      },
+      <span class="hljs-string">&quot;baseUrl&quot;</span>:<span class="hljs-string">&quot;&quot;</span>,
+      <span class="hljs-string">&quot;fresh&quot;</span>:<span class="hljs-literal">false</span>,
+      <span class="hljs-string">&quot;hostname&quot;</span>:<span class="hljs-string">&quot;10.1.10.23&quot;</span>,
+      <span class="hljs-string">&quot;clientIp&quot;</span>:<span class="hljs-string">&quot;10.1.10.1&quot;</span>,
+      <span class="hljs-string">&quot;ips&quot;</span>:[
+
+      ],
+      <span class="hljs-string">&quot;originalUrl&quot;</span>:<span class="hljs-string">&quot;/api/getCustomerByName?name=foo&quot;</span>,
+      <span class="hljs-string">&quot;params&quot;</span>:{
+
+      },
+      <span class="hljs-string">&quot;path&quot;</span>:<span class="hljs-string">&quot;/api/getCustomerByName&quot;</span>,
+      <span class="hljs-string">&quot;protocol&quot;</span>:<span class="hljs-string">&quot;http&quot;</span>,
+      <span class="hljs-string">&quot;query&quot;</span>:{
+         <span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;foo&quot;</span>
+      },
+      <span class="hljs-string">&quot;route&quot;</span>:{
+         <span class="hljs-string">&quot;path&quot;</span>:<span class="hljs-string">&quot;/api/getCustomerByName&quot;</span>,
+         <span class="hljs-string">&quot;stack&quot;</span>:[
+            {
+               <span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;&lt;anonymous&gt;&quot;</span>,
+               <span class="hljs-string">&quot;keys&quot;</span>:[
+
+               ],
+               <span class="hljs-string">&quot;regexp&quot;</span>:{
+                  <span class="hljs-string">&quot;fast_star&quot;</span>:<span class="hljs-literal">false</span>,
+                  <span class="hljs-string">&quot;fast_slash&quot;</span>:<span class="hljs-literal">false</span>
+               },
+               <span class="hljs-string">&quot;method&quot;</span>:<span class="hljs-string">&quot;get&quot;</span>
+            }
+         ],
+         <span class="hljs-string">&quot;methods&quot;</span>:{
+            <span class="hljs-string">&quot;get&quot;</span>:<span class="hljs-literal">true</span>
+         }
+      },
+      <span class="hljs-string">&quot;secure&quot;</span>:<span class="hljs-literal">false</span>
+   },
+   <span class="hljs-string">&quot;event_timestamp&quot;</span>:<span class="hljs-number">1586878576835</span>
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../streaming_tcp/" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Streaming TCP">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Streaming REST","level":"1.3.4","depth":2,"previous":{"title":"Streaming TCP","level":"1.3.3","depth":2,"path":"high-interaction/streaming_tcp/README.adoc","ref":"high-interaction/streaming_tcp/README.adoc","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{"copyrightYear":"2020","copyrightHolder":"Kylin Soong"},"plugins":["collapsible-menu","donate","-sharing","sharing-plus","splitter","back-to-top-button","edit-link"],"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright &copy Kylin Soong 2020","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"collapsible-menu":{},"splitter":{},"search":{},"sharing-plus":{"qq":false,"all":["facebook","google","twitter","instapaper","linkedin","pocket","stumbleupon"],"douban":false,"facebook":true,"weibo":false,"instapaper":false,"whatsapp":false,"hatenaBookmark":false,"twitter":true,"messenger":false,"line":false,"vk":false,"pocket":true,"google":false,"viber":false,"stumbleupon":false,"qzone":false,"linkedin":false},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"donate":{"alipay":"http://ksoong.org/docs/content/images/alipay.png","alipayText":"支付宝捐赠","button":"赞赏","title":"","wechat":"http://ksoong.org/docs/content/images/wechat.png","wechatText":"微信捐赠"},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"sharing":{"weibo":true,"linkedin":true,"google":true,"facebook":true,"all":["facebook","google","linkedin","weibo"]},"edit-link":{"label":"Edit This Page","base":"https://github.com/kylinsoong/docs/blob/gh-pages"},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"website.css"}},"file":{"path":"high-interaction/streaming_rest/README.adoc","mtime":"2020-09-11T15:01:25.162Z","type":"asciidoc"},"gitbook":{"version":"3.2.3","time":"2020-12-05T09:52:17.234Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-collapsible-menu/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-donate/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing-plus/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-back-to-top-button/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-edit-link/plugin.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

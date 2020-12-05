@@ -1,0 +1,172 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "OpenAPI definition",
+    "version": "v1.1"
+  },
+  "servers": [
+    {
+      "url": "http://10.1.10.12:80",
+      "description": "Generated server url"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Customer",
+      "description": "the customer store API"
+    }
+  ],
+  "paths": {
+    "/api/customers": {
+      "get": {
+        "summary": "Get all customers",
+        "description": "Return all customers in customerstore",
+        "responses": {
+          "200": {
+            "description": "default response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/getCustomerByName": {
+      "get": {
+        "summary": "Get customer by name",
+        "description": "Returns customer for name specified.",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Customer name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Customer not found"
+          }
+        }
+      }
+    },
+    "/api/addCustomer": {
+      "post": {
+        "summary": "Add customer",
+        "description": "Add a customer",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Customer name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "default response"
+          }
+        }
+      }
+    },
+    "/api/deleteCustomer": {
+      "delete": {
+        "summary": "Delete customer",
+        "description": "Delete a customer by name",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Customer name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "default response"
+          }
+        }
+      }
+    },
+    "/api/updateCustomer": {
+      "put": {
+        "summary": "Update customer",
+        "description": "Update a exist customer",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Customer name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "default response"
+          }
+        }
+      }
+    },
+    "/oauth/authorize": {
+      "get": {
+        "summary": "Allows a Consumer application to use an OAuth Request Token",
+        "description": "",
+        "parameters": [
+          {
+            "name": "oauth_token",
+            "in": "query",
+            "description": "oauth token name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Failed"
+          }
+        }
+      }
+    },
+    "/oauth/request_token": {
+      "post": {
+        "summary": "Request access token",
+        "description": "",
+        "parameters": [
+          {
+            "name": "oauth_consumer_key",
+            "in": "query",
+            "description": "consumer key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "default response"
+          }
+        }
+      }
+    }
+  }
+}
+
