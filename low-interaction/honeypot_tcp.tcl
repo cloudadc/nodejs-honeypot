@@ -79,7 +79,7 @@ when CLIENT_ACCEPTED {
       set HONEYPOTTYPE "TCP"
   }  
   
-  set msg "{\"timestamp\": \"$DATE_NCSA\", \"client_ip\": \"$CLIENT_IP\", \"client_port\": $CLIENT_PORT, \"server_ip\": \"$VIRTUAL_IP\",\"server_port\":$VIRTUAL_PORT,\"province\": \"$province\",\"city\": \"$city\",\"message\": \"$HONEYPOTTYPE Honeypot be accessed\", \"type\": $HONEYPOTTYPE, \"protocol\": \"tcp\"}"
+  set msg "{\"timestamp\": \"$DATE_NCSA\", \"client_ip\": \"$CLIENT_IP\", \"client_port\": $CLIENT_PORT, \"server_ip\": \"$VIRTUAL_IP\",\"server_port\":$VIRTUAL_PORT,\"province\": \"$province\",\"city\": \"$city\",\"message\": \"$HONEYPOTTYPE Honeypot be accessed\", \"type\": \"$HONEYPOTTYPE\", \"protocol\": \"tcp\"}"
   log local0. $msg
   log $REMOTESYSLOGSERVER $msg
   
