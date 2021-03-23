@@ -85,8 +85,9 @@ when CLIENT_ACCEPTED {
   
   if { ($VIRTUAL_PORT == 80)  or  ($VIRTUAL_PORT == 8080) or ($VIRTUAL_PORT == 445) or ($VIRTUAL_PORT == 7001) or  ($VIRTUAL_PORT == 21) or ($VIRTUAL_PORT == 22) or ($VIRTUAL_PORT == 3389)} {
       pool $HIGHRISKPOOL
+  } else {
+    TCP::respond "\r\n\r\n"
+    TCP::close
   }
 
-  TCP::respond "\r\n\r\n"
-  TCP::close
 }
